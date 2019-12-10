@@ -14,8 +14,8 @@ interface IProps extends RouteComponentProps {
 }
 
 interface IState {
-  data? : object;
-  userInfo?: object;
+  data? : object; // TODO add correct interface
+  userInfo?: object; // TODO add correct interface
 }
 
 class RoutedApp extends Component<IProps, IState> {
@@ -32,7 +32,7 @@ class RoutedApp extends Component<IProps, IState> {
     this.getMoreInfoUSers(e.target.id)
   }
 
-  componentDidMount() {
+  componentDidMount() { // Why did you use await and then at the same time?
     fetch('http://localhost:3000/users/', {
         method: 'GET',
         headers: {
