@@ -14,8 +14,8 @@ interface IProps extends RouteComponentProps {
 }
 
 interface IState {
-  data? : object;
-  userInfo?: object;
+  UsersData : object;
+  InfoAboutUser: object;
 }
 
 class RoutedApp extends Component<IProps, IState> {
@@ -23,8 +23,8 @@ class RoutedApp extends Component<IProps, IState> {
     super(props);
 
     this.state = {
-      data: {},
-      userInfo : {},
+      UsersData: {},
+      InfoAboutUser : {},
     };
   }
 
@@ -41,13 +41,13 @@ class RoutedApp extends Component<IProps, IState> {
         },
       })
       .then(response => response.json())
-      .then(dataUser => {
-          this.setState({ data : dataUser })
+      .then(dataFormBD => {
+          this.setState({ UsersData : dataFormBD })
       });
   }
 
-  async getMoreInfoUSers (USER_ID : string) {
-    await fetch('http://localhost:3000/users/'+USER_ID+'', {
+  getMoreInfoUSers (USER_ID : string) {
+    fetch('http://localhost:3000/users/'+USER_ID+'', {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -55,14 +55,14 @@ class RoutedApp extends Component<IProps, IState> {
         },
       })
       .then(response => response.json())
-      .then(dataUser => {
-          this.setState({ userInfo : dataUser })
+      .then(dataAdoutUser => {
+          this.setState({ InfoAboutUser : dataAdoutUser })
       });
   }
 
   handleClick = () => {
     this.setState({
-      userInfo : {},
+      InfoAboutUser : {},
     })
   }
 
@@ -70,16 +70,16 @@ class RoutedApp extends Component<IProps, IState> {
 
 
   render() {
-    const {data, userInfo} = this.state;
-    if (!isEmptyObject(data)) {
+    const {UsersData, InfoAboutUser} = this.state;
+    if (!isEmptyObject(UsersData)) {
       return (
         <>
           <User 
             path="/guest" 
-            data={data}
+            UsersData={UsersData}
             showAlert = {this.showAlert}
           />      
-          {isEmptyObject(userInfo) ? null  : <InfoUser userInfo={userInfo} CloseBlockInfo={this.handleClick}/> }
+          {isEmptyObject(InfoAboutUser) ? null  : <InfoUser InfoAboutUser={InfoAboutUser} CloseBlockInfo={this.handleClick}/> }
         </>
       )
     } else {

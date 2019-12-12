@@ -3,15 +3,15 @@ import * as React from 'react'
 import { RouteComponentProps } from '@reach/router'
 
 interface DataHomePage extends RouteComponentProps {
-  userInfo : any;
+  InfoAboutUser : any;
   CloseBlockInfo : () => void;
 }
 
 const InfoUser: React.FC<DataHomePage> = (props) => {
 
-  if (props.userInfo.length) {
-    console.log(props.userInfo)
-    var listItem = props.userInfo.map((item : any) => 
+  if (props.InfoAboutUser.length) {
+    console.log(props.InfoAboutUser)
+    var listItem = props.InfoAboutUser.map((item : any) => 
       <>
         <p className="infoUser"  id={item._id} key={item._id}>Name : {item.name}</p>
         <p className="infoUser"  id={item._id} key={item._id}>Surname : {item.surname}</p>
