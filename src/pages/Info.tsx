@@ -1,33 +1,30 @@
 import * as React from 'react'
-import { Link } from '@reach/router'
-import { RouteComponentProps } from '@reach/router'
-
-interface DataHomePage extends RouteComponentProps {
-  userInfo : any;
-  CloseBlockInfo : () => void;
+import { connect, ConnectedProps } from 'react-redux'
+interface RootState {
+  isOn: boolean
 }
+const mapState = (state: RootState) => ({
+  isOn: state.isOn
+})
+const mapDispatch = {
+  toggleOn: () => ({ type: 'TOGGLE_IS_ON' })
+}
+const connector = connect(
+  mapState,
+  mapDispatch
+)
 
-const InfoUser: React.FC<DataHomePage> = (props) => {
+type PropsFromRedux = ConnectedProps<typeof connector>
 
-  if (props.userInfo.length) {
-    console.log(props.userInfo)
-    var listItem = props.userInfo.map((item : any) => 
-      <>
-        <li className="infoUser"  id={item._id} key={item._id}>Name : {item.name}</li>
-        <li className="infoUser"  id={item._id} key={item._id}>Surname : {item.surname}</li>
-        <li className="infoUser"  id={item._id} key={item._id}>Login : {item.login}</li>
-        <li className="infoUser"  id={item._id} key={item._id}>ID : {item._id}</li>
-      </> 
-    );
-  }
-
+const InfoUser = (props : PropsFromRedux) => {
 
   return (
     <ul className="blockInfo">
-      {listItem}
-      <Link className="btnBack" onClick = {props.CloseBlockInfo} to="/">Comeback</Link>
+      <button onClick={props.toggleOn}>
+        Button is {props.isOn ? 'ON' : 'OFF'}
+      </button>
     </ul>
   )
 }
 
-export { InfoUser }
+export default connector(InfoUser)
